@@ -10,4 +10,5 @@ chrome.extension.sendMessage({}, function(response) {
 
 	}
 	}, 10);
+	console.log('i did a thing')
 });

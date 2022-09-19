@@ -1,37 +1,43 @@
 {
-  "name": "CHANGE THIS : Extension boilerplate",
+  "name": "WatchRPC",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension was created with the awesome extensionizr.com",
-  "homepage_url": "http://extensionizr.com",
+  "description": "Temp",
+  "homepage_url": "https://waterwolf.tk/projects/watchrpc2",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "src/icons/icon16.png",
+    "32": "src/icons/icon32.png",
+    "48": "src/icons/icon48.png",
+    "64": "src/icons/icon64.png",
+    "128": "src/icons/icon128.png",
+    "256": "src/icons/icon256.png"
   },
   "default_locale": "en",
   "background": {
     "page": "src/bg/background.html",
-    "persistent": false
+    "persistent": true
   },
-  "options_page": "src/options/index.html",
   "browser_action": {
-    "default_icon": "icons/icon19.png",
+    "default_icon": "src/icons/icon64.png",
     "default_title": "browser action demo",
     "default_popup": "src/browser_action/browser_action.html"
   },
   "permissions": [
-    "tabs",
-    "https://youtube.com,https://music.youtube.com"
+    "https://*/*",
+    "http://*/*",
+    "tabs"
   ],
   "content_scripts": [
     {
-      "matches": [
-        "https://www.google.com/*"
-      ],
-      "js": [
-        "src/inject/inject.js"
-      ]
+      "matches": ["*://music.youtube.com/*"],
+      "js": ["src/inject/WatchRPC_full_YTmusic.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["src/inject/WatchRPC_full_Youtube.js"]
     }
   ]
 }
+
+
+
