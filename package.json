@@ -1,0 +1,52 @@
+{
+  "name": "WatchRPC",
+  "version": "0.8.0",
+  "description": "a discord RPC client that sets what your watching to your discord RPC",
+  "main": "src/index.js",
+  "build": {
+    "appId": "Test",
+    "win": {
+      "icon": "build\\icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "runAfterFinish": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build\\icon.ico",
+      "license": "build/license.txt"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WaterWolf5918/WatchRPC.git"
+  },
+  "keywords": [
+    "discordrpc",
+    "discord",
+    "rpc"
+  ],
+  "author": "WaterWolf5918",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WaterWolf5918/WatchRPC/issues"
+  },
+  "homepage": "https://github.com/WaterWolf5918/WatchRPC#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "discord-rpc": "^4.0.1",
+    "express": "^4.18.1",
+    "nconf": "^0.12.0",
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "electron": "^19.0.8",
+    "electron-builder": "^23.1.0"
+  }
+}

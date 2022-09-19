@@ -1,0 +1,11 @@
+{
+  "useVideoThumbnails": true,
+  "showTTY": false,
+  "mode": "youtube",
+  "modes": [
+    "ytmusic",
+    "youtube",
+    "tiktok",
+    "adultswim"
+  ]
+}
