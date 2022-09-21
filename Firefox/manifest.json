@@ -1,0 +1,43 @@
+{
+  "name": "WatchRPC",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Temp",
+  "homepage_url": "https://waterwolf.tk/projects/watchrpc2",
+  "icons": {
+    "16": "src/icons/icon16.png",
+    "32": "src/icons/icon32.png",
+    "48": "src/icons/icon48.png",
+    "64": "src/icons/icon64.png",
+    "128": "src/icons/icon128.png",
+    "256": "src/icons/icon256.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "page": "src/bg/background.html",
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "src/icons/icon64.png",
+    "default_title": "WatchRPC",
+    "default_popup": "src/popup/index.html"
+  },
+  "permissions": [
+    "https://*/*",
+    "http://*/*",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://music.youtube.com/*"],
+      "js": ["src/inject/WatchRPC_full_YTmusic.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["src/inject/WatchRPC_full_Youtube.js"]
+    }
+  ]
+}
+
+
+
