@@ -1,8 +1,8 @@
 
 # Video Data
-A JSON object with 2 arrays the first array being for the video info [^1], and the second array being for the time info[^2]
+A JSON object with 2 arrays the first array being for the video info [1], and the second array being for the time info[2]
 
-[^1]:
+[1]:
 ```json
     [
         "creater": "(The video creater)",
@@ -14,7 +14,7 @@ A JSON object with 2 arrays the first array being for the video info [^1], and t
     ]
 ```
 
-[^2]:
+[2]:
 ```json
     [
         "time":{
