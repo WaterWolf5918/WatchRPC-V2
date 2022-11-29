@@ -71,7 +71,9 @@ body {
 }
 
 .button_type_1:hover{
-	background-color: #50577a;
+	/* background-color: #50577a; */
+	background-color: #3c4053;
+	box-shadow: 0px 0px 15px 4px rgb(63, 121, 255),0px 0px 30px 6px rgb(181, 38, 150)
 }
 
 .discord_button2{
@@ -141,11 +143,14 @@ select {
 	color: white;
 	font-size: 16px;
   }
+
+
 #picker_text{
 	display: inline;
 	position: absolute;
 	top: 18vh;
 	left: 20vw;
+	
 }
 
 #checkbox-help{

@@ -9,23 +9,34 @@ const observer = new MutationObserver((mutationList, observer) => {
 	let other = document.getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0].textContent;
 	other = other.split('\n')[2]
 	other = other.split('          ')[1]
+	console.log(other);
+	console.log(typeof(other))
+
 	let creater = other.split(' • ')[0]
 	let views = other.split(' • ')[1]
 	let likes = other.split(' • ')[2]
 	console.log(`[YoutubeRPC] Stuff changed ${mutationList} ${observer}`)
 	console.log(`[YoutubeRPC] All info ${title} ${creater} ${views} ${likes}`)
 	console.log(`====================\n${title}\nBy ${creater}\n${views} ${likes}\n====================`)
+	let videoData = {
+		"title": title,
+		"creater": creater,
+		"views": views,
+		"likes": likes,
+		"url": window.location.href,
+		"thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src,
+	}
 
-	browser.runtime.sendMessage({ data:`[YoutubeRPC] All info ${title} ${creater} ${views} ${likes}` })
+	chrome.runtime.sendMessage({type:"videodata",data: videoData }, async(response) => {
+		console.log('[WatchRPC] [Content Script] received: ', response);
+	});
 
-	let time = d.getTime();
-	console.log(`[YoutubeRPC] Time ${time}`)
-    setTimeout(() => {
-        console.log("Delayed for 2 second.");
-        observer2.observe(document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0],config)
-      }, 2000)
-      
+
 });
+
+
+
+
 
 
 	// 		data: JSON.stringify({
@@ -38,25 +49,25 @@ const observer = new MutationObserver((mutationList, observer) => {
 	// 		}),
 observer.observe(target_title, config);
 console.log(document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText.toString())
-browser.runtime.onMessage.addListener((request) => {
-	switch (request.type){
-		case "getvideo":
-			console.log(request)
-			return Promise.resolve({ response: {
-				"title": title,
-				"creater": creater,
-				"views": views,
-				"likes": likes,
-				"url": window.location.href,
-				"thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src,
-			} });
+// browser.runtime.onMessage.addListener((request) => {
+// 	switch (request.type){
+// 		case "getvideo":
+// 			console.log(request)
+// 			return Promise.resolve({ response: {
+// 				"title": title,
+// 				"creater": creater,
+// 				"views": views,
+// 				"likes": likes,
+// 				"url": window.location.href,
+// 				"thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src,
+// 			} });
 	
-		default:
-			console.log("Message from the background script:");
-			console.log(request.greeting);
-			return Promise.resolve({ response: "Hi from content script" });
-	}
-});
+// 		default:
+// 			console.log("Message from the background script:");
+// 			console.log(request.greeting);
+// 			return Promise.resolve({ response: "Hi from content script" });
+// 	}
+// });
 
 
 

@@ -1,0 +1,133 @@
+html, body {
+    width: 400px;
+    height: 200px;
+    background-color: rgb(49, 49, 49);
+    background-size: 100% ;
+    overflow: hidden;
+    font-family: Arial;
+    
+}
+
+
+
+
+#popup-content {
+    background-image: linear-gradient(rgb(44, 44, 44),rgb(125, 125, 125));
+    background-color: rgb(49, 49, 49);
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size:cover;
+    overflow: hidden;
+    color:white;
+    height: 99%;
+    width: 99%;
+}
+
+
+#popup-blur{
+    /* margin: 5px; */
+    height: 100%;
+    width: 100%;
+    /* backdrop-filter: blur(10px); */
+    backdrop-filter: blur(3px);
+    position: relative;
+    overflow: hidden;
+    background-color: #0000005a;
+    
+}
+
+#button_type_1{
+	background-color: #2f3241;
+	border: 2px solid #2f3241;
+	color: white;
+	border-radius: 5px;
+	padding: 5px;
+	font-size:large;
+	font-weight: bold;
+    margin-left: 2%;
+	cursor: pointer;
+	width: max-content;
+	top: 2px;
+	position: relative;
+    left: 60%;
+
+}
+
+#refresh{
+    top:80%;
+    left: 93%;
+    position: absolute;
+    font-size: 1.5rem;
+    /* background: #2f3241c7; */
+    border-radius: 1in;
+}
+
+#refresh:hover{
+    color: rgb(205, 205, 205);
+}
+
+
+
+#button_type_1:hover{
+	background-color: #50577a;
+}
+
+#logo{
+    top: 10.6%;
+    /* outline: 0.01px solid rgb(25, 25, 25); */
+	background: url('https://i.imgur.com/weVZmih.png');
+	background-position: center; /* Center the image */
+	background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: cover; /* Resize the background image to cover the entire container */
+    background-image: url('https://i.imgur.com/weVZmih.png');
+    width: 8%;
+    height: 8%;
+    position: absolute;
+}
+
+
+
+#button-container{
+    left: 1%;
+    top:76%;
+    position: absolute;
+    width: 50%;
+    height: 20%;
+}
+
+.button_type_2{
+    padding: 5.2%;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 5;
+    /* background: #2f3241c7; */
+    width: 1px;
+    height: 1px;
+    border-radius: 1in;
+}
+
+
+
+
+
+
+.button_type_2:hover{
+    color: rgb(205, 205, 205);
+}
+
+#logo-text{
+    left: 9.5%; 
+    position: relative;
+}
+.text{
+    border-radius: 0.1in;
+    height:fit-content;
+    width:max-content ;
+    /* background-color: #0000005a; */
+    backdrop-filter: blur(1px);
+}
+
+
+.hide{
+    display: none;
+}

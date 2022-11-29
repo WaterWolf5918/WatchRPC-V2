@@ -1,7 +1,7 @@
 {
   "useVideoThumbnails": true,
-  "showTTY": false,
-  "mode": "youtube",
+  "showTTY": true,
+  "mode": "ytmusic",
   "modes": [
     "ytmusic",
     "youtube",

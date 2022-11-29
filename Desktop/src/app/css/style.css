@@ -38,24 +38,103 @@ body {
 	margin-left: 40%;
 	font-weight: 200;
 	bottom: -1%;
-	overflow: wrap;
+	/* overflow: wrap; */
+	/* backdrop-filter: blur(10px);
+	background: gray; */
 	
 }
 
 #rpc_image{
 	outline: 0.01px solid rgb(25, 25, 25);
-	background: url('https://i.imgur.com/weVZmih.png');
+	background: url('https://i.ytimg.com/vi/UQ92eyxnxmQ/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3nKZrcUNXKOyxRRJpZ3dT4U-NvB5A');
 	background-position: center; /* Center the image */
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: cover; /* Resize the background image to cover the entire container */
-	width: 30vw;
-	height: 20vh;
+	width: 25vw;
+	height: 25vh;
 	position: absolute;
-	left: 4%;
-	top: 25%;
+	left: 2%;
+	top: 15%;
 }
 
 
+
+
+#video_name{
+	margin-left: 4%;
+	font-size: large;
+	font-weight: 800;
+	overflow: hidden ;
+	inline-size: 280px;
+
+}
+
+
+#video_creater{
+	margin-left: 4%;
+	font-weight: 100;
+	font-size:medium;
+	overflow: hidden ;
+	inline-size: 285px;
+}
+
+
+#main{
+	display: flex;
+	width: max-content;
+	height: max-content;
+	overflow: hidden;
+
+}
+
+
+
+
+
+
+#video_image{
+	top: 2vh;
+	background: no-repeat center/100%  url('../YTlogo4.png');
+	object-fit: cover;
+	width: 130px;
+	height: 130px;
+	position: relative;
+	display: inline-block;
+	
+}
+
+
+#time-content {
+	top: 2vh;
+	width: 100%;
+	height: 5px;
+	background: linear-gradient(to top,grey,lightgrey);
+	border-radius: 1px;
+	display: block;
+	position: relative;
+	border-radius: 1px;
+}
+
+#time_bar{
+	width: 50%;
+	height: 5px;
+
+	background-size: 120%;
+	background-color: rgb(0, 153, 255);
+	background-image: linear-gradient(to left,rgb(181, 38, 150),rgb(47, 123, 193));;
+}
+
+
+
+#time{
+	text-align: center;
+	border-radius: 1px;
+	font-size: larger;
+	font-weight: 500;
+	top : -10px;
+	position: relative;
+}
+  
 
 #game{
 	margin-top: -2%;
@@ -86,7 +165,9 @@ body {
 }
 
 .button_type_1:hover{
-	background-color: #50577a;
+	background-color: #3c4053;
+	box-shadow: 0px 0px 15px 4px rgb(63, 121, 255),0px 0px 30px 6px rgb(181, 38, 150)
+		
 }
 
 .button_type_1{
@@ -107,30 +188,12 @@ body {
 }
 
 .button_type_1:hover{
-	background-color: #50577a;
+	/* background-color: #50577a; */
 }
 
 
 
-#Time-content {
-	width: 100%;
-	height: 5px;
-	/* background-color: grey; */
-	background: linear-gradient(to top,grey,lightgrey);
-	border-radius: 1px;
-}
-  
-#TimeBar{
-	width: 50%;
-	height: 5px;
-	/* background-image: linear-gradient(to right,rgb(58, 89, 118),rgb(137, 255, 204));; */
-	background-size: 120%;
-	background-color: rgb(0, 153, 255);
-	/* background-image: linear-gradient(to right,rgb(38, 112, 181),rgb(47, 193, 130));; */
-	background-image: linear-gradient(to left,rgb(181, 38, 150),rgb(47, 123, 193));;
-	border-radius: 1px;
-	/* animation: TimeBar 10s infinite; */
-}
+
 
 /* @keyframes TimeBar{
 	0%{

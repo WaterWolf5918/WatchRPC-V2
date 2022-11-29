@@ -27,6 +27,7 @@
 	width: 18%;
 	/* outline: 2px solid #2f3241; */
 	background: linear-gradient(to top, #2f3241 0%, #44495e 100%);
+	/* background: linear-gradient(to left, #211644 0%, #311740 100%); */
 	background-color: rgb(15, 15, 15);	
 	position: fixed;
 	overflow: hidden;
@@ -41,7 +42,8 @@
 	width: 82%;
 	-webkit-app-region: drag;
 	outline: 0.01px solid #002aff00;
-	background: linear-gradient(to bottom, #2f3241 0%, #2f3241 100%);
+	background: linear-gradient(to bottom, #2f3241 0%, #242732 100%);
+	
 	background-color: rgb(15, 15, 15);	
 	position: fixed;
 	overflow: hidden;

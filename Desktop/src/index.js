@@ -1,3 +1,4 @@
+if(require('electron-squirrel-startup')) return;
 const DiscordRPC = require('discord-rpc');
 const clientId = '995095535709081670';
 
@@ -14,7 +15,10 @@ const server = http.Server(wabserver);
 const bodyParser = require("body-parser");
 let config = nconf.get()
 wabserver.use(bodyParser.json());
-let time_info
+
+console.clear = () =>{
+	console.log("\033[2J \033[H \033c ")
+}
 
 
 //RESTAPI
@@ -35,14 +39,37 @@ const { electron } = require('process');
 const e = require('express');
 
 var io = require('socket.io')(server)
-rpc_info = {
+let old_info = {
 	title: "Waiting For REST API",
 	creater: "No Video",
 	views: "",
 	likes: "",
 	url: "https://waterwolf.tk/404",
-	thumbnail: "ytlogo2",
+	thumbnail: "ytlogo4",
 }
+
+
+let info = [
+	{
+		"creater": "No Video",
+        "title": "Waiting For REST API",
+        "thumbnail": "ytlogo4",
+        "extra":{
+            "url": "https://google.com",
+			"views": "0",
+            "likes": "0"
+        }
+	},
+	{
+        "curruntTime": 0,
+        "totalTime": 0,
+        "timePercent": 0,
+		"formatedTime": ["0:00","0:00"]
+	}
+]
+
+
+
 
 let closedialogSettings  = {
 	buttons: ["Hide To Tray","Exit Program"],
@@ -52,10 +79,8 @@ let closedialogSettings  = {
 }
 
 
-
-
 function createTray () {
-  const icon = path.join(__dirname, 'app','ytlogo2.png') // required.
+  const icon = path.join(__dirname, 'app','ytlogo4.png') // required.
   const trayicon = nativeImage.createFromPath(icon)
   tray = new Tray(trayicon.resize({ width: 16 }))
   const contextMenu = Menu.buildFromTemplate([
@@ -75,8 +100,8 @@ let Mainwindow
 let Settingswindow
 	const createWindow = () => {
     Mainwindow = new BrowserWindow({
-        width: 400,
-        height: 425,
+        width: 425,
+        height: 300,
         resizable: false,		
         webPreferences: {
             contextIsolation: true,
@@ -100,12 +125,26 @@ const createWindow2 = () => {
         frame: false,
     });
     Settingswindow.loadFile(path.join(__dirname, '/app/settings.html'));
-	Settingswindow.webContents.send('getstatus',nconf.get())
+	// Settingswindow.webContents.send('getstatus',nconf.get())
 }
 
 
 
-
+function printTTY(){
+	if (nconf.get('showTTY')){
+		console.clear()
+		console.log('--------------------------Video Info --------------------------')
+		config.useVideoThumbnails ? console.log(`Using Video Thumbnails`) : console.log("Not Using Video Thumbnails")
+		console.log(`${info[1].formatedTime[0]} / ${info[1].formatedTime[1]} | ${Math.round(info[1].timePercent)}%`)
+		console.log(`Video Title: ${info[0].title}`)
+		console.log(`Video Creater: ${info[0].creater}`)
+		console.log(`Video Views: ${info[0].extra.views}`)
+		console.log(`Video Likes: ${info[0].extra.likes}`)
+		console.log(`Video URL: ${info[0].extra.url}`)
+		console.log(`Video Thumbnail: ${info[0].thumbnail}`)
+		console.log('---------------------------------------------------------------')
+	}
+}
 
 
 ipcMain.handle('controls',(event,arg) => {
@@ -138,27 +177,26 @@ ipcMain.handle('settings',(event,arg) => {
 	console.log(`[ipcMain] [settings] > settings`)
 	createWindow2();
 })
+
+
+
+
+
 ipcMain.handle('status',(event,args) => {
 	console.log(args)
 	if (nconf.get('mode') !== args.Service){
-		time_info = {
-			curruntTime: 0,
-			totalTime: 0,
-			timeP: 0,
-			formatedTime: [0,0]
-		}
-		Mainwindow.webContents.send('video update', [rpc_info,{"time" : time_info, "timepercent" : time_info.timeP}])
+		info[1].curruntTime = 0
+		info[1].totalTime = 0
+		info[1].timePercent= 0
+		info[1].formatedTime = ["0:00","0:00"]
+		sendUpdate()
 	}
 	nconf.set('mode',args.Service)
 	nconf.set('showTTY',args.showTTy)
 	nconf.set('useVideoThumbnails',args.useVideo)
 	nconf.save()
 })
-
 ipcMain.handle('getStatus',() => nconf.get())
-
-
-
 
 
 wabserver.post("/YTmusic", (req, res) => {
@@ -173,33 +211,23 @@ wabserver.post("/YTmusic", (req, res) => {
 	} = req.body;
 	res.send(`YTmusic[OK]`);
 	if (nconf.get('mode') == "ytmusic"){
-		rpc_info = {
-			title: title,
-			creater: creater,
-			views: views,
-			likes: likes,
+		info[0].creater = creater
+		info[0].title = title
+		info[0].thumbnail = thumbnail
+		info[0].extra = {
 			url: url,
-			thumbnail: thumbnail,
+			views: views,
+			likes: likes
 		}
 	}
 });
 
 
 
-function printTTY(){
-	if (nconf.get('showTTY')){
-		console.log('\n\n--------------------------Video Info --------------------------')
-		config.useVideoThumbnails ? console.log(`Using Video Thumbnails`) : console.log("Not Using Video Thumbnails")
-		console.log(`${time_info.curruntTime} / ${time_info.totalTime} | ${Math.round(time_info.timeP)}%`)
-		console.log(`Video Title: ${rpc_info.title}`)
-		console.log(`Video Creater: ${rpc_info.creater}`)
-		console.log(`Video Views: ${rpc_info.views}`)
-		console.log(`Video Likes: ${rpc_info.likes}`)
-		console.log(`Video URL: ${rpc_info.url}`)
-		console.log(`Video Thumbnail: ${rpc_info.thumbnail}`)
-		console.log('---------------------------------------------------------------')
-	}
-}
+
+
+
+
 
 
 
@@ -213,32 +241,21 @@ wabserver.post("/Time", (req, res) => {
 		service
 	} = req.body;
 	res.send(`Time[OK]`);
-	time_info = {
+	info[1] = {
 		curruntTime: curruntTime,
 		totalTime: totalTime,
-		timeP: timeP,
+		timePercent: timeP,
 		formatedTime: formatedTime
 	}
 		printTTY()
-		nconf.get('useVideoThumbnails') ? image = rpc_info.thumbnail : image = "ytlogo2"       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = rpc_info.thumbnail}else{image = "ytlogo2"}
-		if (service == nconf.get('mode')){
-			rpc.setActivity({
-				details: `${rpc_info.title}`,
-				state: `By ${rpc_info.creater}\n ${time_info.formatedTime[0]}/${time_info.formatedTime[1]}`,
-				largeImageKey:image,smallImageKey: "ytlogo2",
-				smallImageText: "WatchRPC",
-				large_text: `${rpc_info.views} ${rpc_info.likes}`,
-				buttons: [{"label": "Watch Video", "url": rpc_info.url}],
-				instance: false,
-			})
-			Mainwindow.webContents.send('video update', [rpc_info,{"time" : time_info, "timepercent" : time_info.timeP}])
+		nconf.get('useVideoThumbnails') ? image = info[0].thumbnail : image = "ytlogo4"       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = info[0].thumbnail}else{image = "ytlogo4"}
+		if (service == nconf.get('mode')){ // check to see if the services is selected
+			sendUpdate()
 		}else{
 			return
 		}
 });
 
-
-//electron imports
 
 app.whenReady().then(() => {
     createWindow();
@@ -256,12 +273,31 @@ rpc.on('ready', () => {
 async function setActivity() {
     rpc.setActivity({
       details: "Waiting For REST API",
-      largeImageKey: "ytlogo2",
+      largeImageKey: "ytlogo4",
       large_text: "Large Text Here!",
       buttons: [{"label": "Watch Video", "url": "https://google.com"}],
       instance: false,
     });
   }
+
+
+function sendUpdate(){
+	// code to refresh RPC and send update to gui
+	rpc.setActivity({
+		details: `${info[0].title} ${info[1].formatedTime[0]} / ${info[1].formatedTime[1]}`,
+		state: `By ${info[0].creater}`,
+		largeImageKey: `${info[0].thumbnail}`,
+		smallImageKey: `ytlogo4`,
+		smallImageText: "WatchRPC v2",
+		largeImageText: `${info[1].formatedTime[0]} / ${info[1].formatedTime[1]} | ${Math.round(info[1].timePercent)}%`,
+		buttons: [{"label": "Watch Video", "url":`${info[0].extra.url}`}],
+		instance: false,
+	})
+
+	Mainwindow.webContents.send('infoUpdate',info)
+	
+}
+
 
 
 //DISCORD RPC
