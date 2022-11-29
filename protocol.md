@@ -4,46 +4,48 @@ A JSON object with 2 arrays the first array being for the video info [1], and th
 
 [1]:
 ```json
-    [
-        "creater": "(The video creater)",
+	{
+		"creater": "(The video creater)",
         "title": "(The name of the video)",
-        "thumbnail": "(The video thumbnail, if there is one)"
+        "thumbnail": "(The video thumbnail, if there is one)",
         "extra":{
             "url": "(The url of the video on open platforms)"
         }
-    ]
+	},
 ```
 
 [2]:
 ```json
-    [
-        "time":{
+	{
+		"time":{
             "curruntTime": 200,
-            "totalTime": 100
+            "totalTime": 100,
         },
         "timepercent": 10.1000000
-    ]
+	}
 ```
 
 ## The complete JSON object
 ```json
-{
-    [
-        "creater": "(The video creater)",
+[
+	{
+		"creater": "(The video creater)",
         "title": "(The name of the video)",
-        "thumbnail": "(The video thumbnail, if there is one)"
+        "thumbnail": "(The video thumbnail, if there is one)",
         "extra":{
-            "url": "(The url of the video on open platforms)"
+            "url": "(The url of the video on open platforms)",
+            "views": "",
+            "likes": ""
         }
-    ],
-    [
-        "time":{
+	},
+	{
+		"time":{
             "curruntTime": 200,
-            "totalTime": 100
+            "totalTime": 100,
         },
-        "timepercent": 10.1000000
-    ]
-}
+        "timePercent": 10.1000000
+	}
+]
 ```
 
 
