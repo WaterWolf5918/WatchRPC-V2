@@ -1,5 +1,6 @@
 console.log('[WatchRPC] Loaded Background Script')
-let videoData 
+let videoData
+let timedata
 
 
 
@@ -10,6 +11,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log(`[WatchRPC] [Background]: ${JSON.stringify(message.data)}`);
             videoData = message.data;
             sendResponse("OK");
+            sendFetch(videoData);
             break;
         case "getVideoData":
             console.log(`[WatchRPC] [Background]: Sending Video Data`)
@@ -19,8 +21,50 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
             sendResponse(videoData);
             break;
+        case "timedata":
+            timedata = message.data
+            sendResponse("OK");
+            sendTime(timedata)
+            break;
     }
 });
+
+
+
+/** 
+ * @param {Object} info The json object that contains the video info [browser only] (Doesn't use the protocol) 
+*/
+function sendFetch(videoData){
+	fetch("http://localhost:9494/YTmusic", {
+    	method: 'POST',
+    	headers: {
+    	    'Accept': 'application/json',
+    	    'Content-Type': 'application/json'
+    	},
+    	body: JSON.stringify(videoData)
+	})
+	.then(response => response.json())
+	.then(response => console.log(JSON.stringify(response)))
+}
+
+
+
+
+function sendTime(timeData){
+    console.log(timeData)
+    fetch("http://localhost:9494/time", {
+    	method: 'POST',
+    	headers: {
+    	    'Accept': 'application/json',
+    	    'Content-Type': 'application/json'
+    	},
+    	body: JSON.stringify(timeData)
+	})
+	.then(response => response.json())
+	.then(response => console.log(JSON.stringify(response)))
+}
+
+
 
 
 //port.postMessage({question: "Who's there?"});

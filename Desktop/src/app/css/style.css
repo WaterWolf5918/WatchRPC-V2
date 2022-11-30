@@ -51,7 +51,7 @@ body {
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: cover; /* Resize the background image to cover the entire container */
 	width: 25vw;
-	height: 25vh;
+	height: 25vw;
 	position: absolute;
 	left: 2%;
 	top: 15%;
@@ -96,8 +96,8 @@ body {
 	top: 2vh;
 	background: no-repeat center/100%  url('../YTlogo4.png');
 	object-fit: cover;
-	width: 130px;
-	height: 130px;
+	width: 25vw;
+	height: 25vw;
 	position: relative;
 	display: inline-block;
 	

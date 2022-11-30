@@ -132,7 +132,7 @@ const createWindow2 = () => {
 
 function printTTY(){
 	if (nconf.get('showTTY')){
-		console.clear()
+		// console.clear()
 		console.log('--------------------------Video Info --------------------------')
 		config.useVideoThumbnails ? console.log(`Using Video Thumbnails`) : console.log("Not Using Video Thumbnails")
 		console.log(`${info[1].formatedTime[0]} / ${info[1].formatedTime[1]} | ${Math.round(info[1].timePercent)}%`)
@@ -210,6 +210,7 @@ wabserver.post("/YTmusic", (req, res) => {
 		thumbnail
 	} = req.body;
 	res.send(`YTmusic[OK]`);
+	console.log(JSON.stringify(req.body))
 	if (nconf.get('mode') == "ytmusic"){
 		info[0].creater = creater
 		info[0].title = title
@@ -219,7 +220,9 @@ wabserver.post("/YTmusic", (req, res) => {
 			views: views,
 			likes: likes
 		}
+		sendUpdate()
 	}
+	
 });
 
 
@@ -245,8 +248,9 @@ wabserver.post("/Time", (req, res) => {
 		curruntTime: curruntTime,
 		totalTime: totalTime,
 		timePercent: timeP,
-		formatedTime: formatedTime
+		formatedTime: formattedTimeBuilder(curruntTime,totalTime)
 	}
+		
 		printTTY()
 		nconf.get('useVideoThumbnails') ? image = info[0].thumbnail : image = "ytlogo4"       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = info[0].thumbnail}else{image = "ytlogo4"}
 		if (service == nconf.get('mode')){ // check to see if the services is selected
@@ -263,6 +267,28 @@ app.whenReady().then(() => {
 
 
 
+
+/**
+ * 
+ * @param {number} currentSeconds
+ * @param {number} totalSeconds
+ * @returns 
+ */
+function formattedTimeBuilder(currentSeconds, totalSeconds){
+	let returnv = [] // should have 2 strings [1]: 0:00 [2]: 1:00
+	var cmins = Math.floor(currentSeconds / 60)
+	var csecs = Math.floor(currentSeconds- cmins * 60)
+	var tmins = Math.floor(totalSeconds / 60)
+	var tsecs = Math.floor(totalSeconds - tmins * 60)
+	console.log(`${tmins}:${tsecs}`)
+	if (/^\d$/.test(csecs))  {
+		csecs = `0${csecs}`
+	}
+	
+
+
+	return [`${cmins}:${csecs}`,`${tmins}:${tsecs}`]
+}
 
 //DISCORD RPC
 rpc.on('ready', () => {

@@ -71,13 +71,13 @@ function updateImage(image){
     let imageDOM = document.getElementById("video_image")
     //check if should use image
     if (image == "ytlogo4"){
-        imageDOM.style.height = "25vh";
-        imageDOM.style.width = "25vw";
-        imageDOM.style.left = "4%";
+        imageDOM.style.height = "35vw";
+        imageDOM.style.width = "35vw";
+        imageDOM.style.left = "2%";
         imageDOM.style.backgroundImage = `url(./YTlogo4.png)`;
     }else{
-        imageDOM.style.height = "35vh";
-        imageDOM.style.width = "25vw";
+        imageDOM.style.height = "40vh";
+        imageDOM.style.width = "30vw";
         imageDOM.style.left = "1%";
         imageDOM.style.backgroundImage = `url(${image})`;
     }
