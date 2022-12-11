@@ -2,9 +2,9 @@ const { contextBridge, ipcRenderer } = require("electron")
 
 
 contextBridge.exposeInMainWorld("controls", {
-    minimize: () => ipcRenderer.invoke("controls", "minimize"),
-    max: () => ipcRenderer.invoke("controls", "max"),
-    close: () => ipcRenderer.invoke("controls", "close"),
+    minimize: () => ipcRenderer.invoke("winControls", "minimize"),
+    max: () => ipcRenderer.invoke("winControls", "max"),
+    close: () => ipcRenderer.invoke("winControls", "close"),
     size: (arg) => ipcRenderer.invoke("size", arg),
 })
 
@@ -23,9 +23,6 @@ contextBridge.exposeInMainWorld("settings", {
 //             document.getElementById("TTY").checked = Boolean(data.showTTY)
 //             document.getElementById("TTY").checked = Boolean(data.showTTY)
 //     })
-
-
-    
 
 
 //     console.log(`Current Service: ${document.getElementById("services").value}`)
@@ -76,8 +73,8 @@ function updateImage(image){
         imageDOM.style.left = "2%";
         imageDOM.style.backgroundImage = `url(./YTlogo4.png)`;
     }else{
-        imageDOM.style.height = "40vh";
-        imageDOM.style.width = "30vw";
+        imageDOM.style.height = "35vw";
+        imageDOM.style.width = "35vw";
         imageDOM.style.left = "1%";
         imageDOM.style.backgroundImage = `url(${image})`;
     }

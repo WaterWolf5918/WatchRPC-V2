@@ -11,7 +11,7 @@ html, body {
 }
 
 #popup-content {
-    background-image: linear-gradient(rgb(0, 0, 0),rgb(125, 125, 125));
+    background-image: linear-gradient(rgb(0, 0, 0),rgb(125, 125, 125),rgb(0, 0, 0));
     background-color: rgb(49, 49, 49);
     background-position: 0;
     background-repeat: no-repeat;
@@ -36,41 +36,6 @@ html, body {
     background: linear-gradient(to bottom,#000000d1,#9a9a9a5a);
 }
 
-#button_type_1{
-	background-color: #2f3241;
-	border: 2px solid #2f3241;
-	color: white;
-	border-radius: 5px;
-	padding: 5px;
-	font-size:large;
-	font-weight: bold;
-    margin-left: 2%;
-	cursor: pointer;
-	width: max-content;
-	top: 2px;
-	position: relative;
-    left: 60%;
-
-}
-
-#refresh{
-    top:80%;
-    left: 93%;
-    position: absolute;
-    font-size: 1.5rem;
-    /* background: #2f3241c7; */
-    border-radius: 1in;
-}
-
-#refresh:hover{
-    color: rgb(205, 205, 205);
-}
-
-
-
-#button_type_1:hover{
-	background-color: #50577a;
-}
 
 #logo{
     top: 10.6%;
@@ -86,34 +51,6 @@ html, body {
 }
 
 
-
-#button-container{
-    left: 1%;
-    top:76%;
-    position: absolute;
-    width: 50%;
-    height: 20%;
-}
-
-.button_type_2{
-    padding: 5.2%;
-    font-size: 1.5rem;
-    color: white;
-    font-weight: 5;
-    /* background: #2f3241c7; */
-    width: 1px;
-    height: 1px;
-    border-radius: 1in;
-}
-
-
-
-
-
-
-.button_type_2:hover{
-    color: rgb(205, 205, 205);
-}
 
 #logo-text{
     left: 9.5%; 

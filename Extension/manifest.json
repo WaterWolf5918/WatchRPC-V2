@@ -1,6 +1,6 @@
 {
   "name": "WatchRPC",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "manifest_version": 2,
   "description": "Lets you display what your watching on discord",
   "homepage_url": "https://waterwolf.tk/projects/watchrpc2",
@@ -21,16 +21,9 @@
     "default_title": "WatchRPC",
     "default_popup": "src/popup/index.html"
   },
-
-
-
-
-
   "permissions": [
-    "https://*/*",
-    "http://*/*",
-    "tabs",
-    "activeTab"
+    "http://localhost/*"
+
   ],
   "content_scripts": [
     {
@@ -41,12 +34,7 @@
       "matches": ["https://www.youtube.com/*"],
       "js": ["src/inject/WatchRPC_full_Youtube.js"]
     }
-  ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "WatchRPC@waterwolf.tk"
-    }
-  }
+  ]
 }
 
 

@@ -13,42 +13,13 @@ nconf.use('file', { file: path.join(__dirname,"config.json") });
 const wabserver = express();
 const server = http.Server(wabserver);
 const bodyParser = require("body-parser");
+const utils = require('./utils')
+const positron = require('./positron')
+const { app, BrowserWindow, ipcMain  } = require('electron');
 let config = nconf.get()
-wabserver.use(bodyParser.json());
-
-console.clear = () =>{
-	console.log("\033[2J \033[H \033c ")
-}
-
-
-//RESTAPI
-wabserver.all('/*', function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "*");
-	next();
-});
-//RESTAPI
-
-
-
-
-
-//electron imports
-const { app, BrowserWindow, getCurrentWindow, ipcMain, Menu, nativeImage, Tray, dialog  } = require('electron');
-const { electron } = require('process');
-const e = require('express');
-
-var io = require('socket.io')(server)
-let old_info = {
-	title: "Waiting For REST API",
-	creater: "No Video",
-	views: "",
-	likes: "",
-	url: "https://waterwolf.tk/404",
-	thumbnail: "ytlogo4",
-}
-
-
+let Mainwindow
+let Settingswindow
+let tray = null
 let info = [
 	{
 		"creater": "No Video",
@@ -69,39 +40,13 @@ let info = [
 ]
 
 
+wabserver.use(bodyParser.json());
+console.clear = () =>{console.log("\033[2J \033[H \033c ")} //since console.clear() stil doesn't work on windows :face_palm:
 
-
-let closedialogSettings  = {
-	buttons: ["Hide To Tray","Exit Program"],
-	message: "Do you want to exit the program or hide it to the tray?",
-	title: "Exit Program?",
-	type: "question",
-}
-
-
-function createTray () {
-  const icon = path.join(__dirname, 'app','ytlogo4.png') // required.
-  const trayicon = nativeImage.createFromPath(icon)
-  tray = new Tray(trayicon.resize({ width: 16 }))
-  const contextMenu = Menu.buildFromTemplate([
-    {label: `Show App`, click: () => {
-		mainWindow.show()
-      }},
-    {label: 'Quit', click: () => {
-        app.quit()
-      }},
-  ])
-  tray.setContextMenu(contextMenu)
-}
-
-
-let tray = null
-let Mainwindow
-let Settingswindow
-	const createWindow = () => {
-    Mainwindow = new BrowserWindow({
+function createWindow(){
+	Mainwindow = new BrowserWindow({
         width: 425,
-        height: 300,
+        height: 260,
         resizable: false,		
         webPreferences: {
             contextIsolation: true,
@@ -110,11 +55,12 @@ let Settingswindow
         frame: false,
     });
     Mainwindow.loadFile(path.join(__dirname, '/app/index.html'));
-	if (!tray) { createTray() }
+	if (!tray) { positron.createBasicTray(tray,Mainwindow) }
 	Mainwindow.on('closed',() => { Mainwindow = null })
 }
-const createWindow2 = () => {
-    Settingswindow = new BrowserWindow({
+
+function createWindow2(){
+	Settingswindow = new BrowserWindow({
         width: 600,
         height: 600,
         resizable: false,		
@@ -130,47 +76,14 @@ const createWindow2 = () => {
 
 
 
-function printTTY(){
-	if (nconf.get('showTTY')){
-		// console.clear()
-		console.log('--------------------------Video Info --------------------------')
-		config.useVideoThumbnails ? console.log(`Using Video Thumbnails`) : console.log("Not Using Video Thumbnails")
-		console.log(`${info[1].formatedTime[0]} / ${info[1].formatedTime[1]} | ${Math.round(info[1].timePercent)}%`)
-		console.log(`Video Title: ${info[0].title}`)
-		console.log(`Video Creater: ${info[0].creater}`)
-		console.log(`Video Views: ${info[0].extra.views}`)
-		console.log(`Video Likes: ${info[0].extra.likes}`)
-		console.log(`Video URL: ${info[0].extra.url}`)
-		console.log(`Video Thumbnail: ${info[0].thumbnail}`)
-		console.log('---------------------------------------------------------------')
-	}
-}
 
 
-ipcMain.handle('controls',(event,arg) => {
-	switch (arg) {
-		case "minimize":
-			console.log("[ipcMain] [window control] > minimize")
-			Mainwindow.minimize();
-			break;
-		case "close":
-			if (BrowserWindow.getFocusedWindow() == Mainwindow) {
-				console.log("[ipcMain] [window control] > close")
-				dialog.showMessageBox(closedialogSettings)
-				.then((result) => { Boolean(result.response) ? app.quit() : Mainwindow.hide();/** if response is true, hide window, else quit app */})
-			} else {
-				console.log("[ipcMain] [window control] > close")
-				BrowserWindow.getFocusedWindow().close();
-			}
-			break;
-		case "max":
-			console.log("[ipcMain] [window control] > max")
-			Mainwindow.maximize();
-			break;
-		default:
-			console.log(`[ipcMain] [window control] > ${arg}`)
-	}
+
+
+ipcMain.handle('winControls',(event,arg) => {
+	positron.handleWinControls(arg)
 }) 
+
 
 
 ipcMain.handle('settings',(event,arg) => {
@@ -228,13 +141,6 @@ wabserver.post("/YTmusic", (req, res) => {
 
 
 
-
-
-
-
-
-
-
 wabserver.post("/Time", (req, res) => {
 	var {
 		curruntTime,
@@ -248,47 +154,23 @@ wabserver.post("/Time", (req, res) => {
 		curruntTime: curruntTime,
 		totalTime: totalTime,
 		timePercent: timeP,
-		formatedTime: formattedTimeBuilder(curruntTime,totalTime)
+		formatedTime: utils.formattedTimeBuilder(curruntTime,totalTime)
 	}
-		
-		printTTY()
+		if (nconf.get('showTTY')){utils.printTTY(info,nconf.get('useVideoThumbnails'))}
 		nconf.get('useVideoThumbnails') ? image = info[0].thumbnail : image = "ytlogo4"       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = info[0].thumbnail}else{image = "ytlogo4"}
 		if (service == nconf.get('mode')){ // check to see if the services is selected
 			sendUpdate()
-		}else{
-			return
 		}
+		return
 });
 
 
-app.whenReady().then(() => {
-    createWindow();
-})
+app.whenReady().then(() => {createWindow();})
 
 
 
 
-/**
- * 
- * @param {number} currentSeconds
- * @param {number} totalSeconds
- * @returns 
- */
-function formattedTimeBuilder(currentSeconds, totalSeconds){
-	let returnv = [] // should have 2 strings [1]: 0:00 [2]: 1:00
-	var cmins = Math.floor(currentSeconds / 60)
-	var csecs = Math.floor(currentSeconds- cmins * 60)
-	var tmins = Math.floor(totalSeconds / 60)
-	var tsecs = Math.floor(totalSeconds - tmins * 60)
-	console.log(`${tmins}:${tsecs}`)
-	if (/^\d$/.test(csecs))  {
-		csecs = `0${csecs}`
-	}
-	
 
-
-	return [`${cmins}:${csecs}`,`${tmins}:${tsecs}`]
-}
 
 //DISCORD RPC
 rpc.on('ready', () => {
@@ -319,9 +201,10 @@ function sendUpdate(){
 		buttons: [{"label": "Watch Video", "url":`${info[0].extra.url}`}],
 		instance: false,
 	})
-
+	.catch((err) => {
+		console.error(err)
+	})
 	Mainwindow.webContents.send('infoUpdate',info)
-	
 }
 
 

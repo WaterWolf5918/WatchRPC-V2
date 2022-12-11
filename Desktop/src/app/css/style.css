@@ -21,7 +21,7 @@ body {
 	background-color: rgb(22, 22, 22);
 	color: white;
 	font-family: Mukta, Helvetica, sans-serif;
-	
+	overflow: hidden;
 }
 
 .text{
@@ -44,20 +44,6 @@ body {
 	
 }
 
-#rpc_image{
-	outline: 0.01px solid rgb(25, 25, 25);
-	background: url('https://i.ytimg.com/vi/UQ92eyxnxmQ/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3nKZrcUNXKOyxRRJpZ3dT4U-NvB5A');
-	background-position: center; /* Center the image */
-	background-repeat: no-repeat; /* Do not repeat the image */
-	background-size: cover; /* Resize the background image to cover the entire container */
-	width: 25vw;
-	height: 25vw;
-	position: absolute;
-	left: 2%;
-	top: 15%;
-}
-
-
 
 
 #video_name{
@@ -66,7 +52,6 @@ body {
 	font-weight: 800;
 	overflow: hidden ;
 	inline-size: 280px;
-
 }
 
 
@@ -84,23 +69,15 @@ body {
 	width: max-content;
 	height: max-content;
 	overflow: hidden;
-
 }
-
-
-
-
 
 
 #video_image{
 	top: 2vh;
 	background: no-repeat center/100%  url('../YTlogo4.png');
 	object-fit: cover;
-	width: 25vw;
-	height: 25vw;
 	position: relative;
 	display: inline-block;
-	
 }
 
 
@@ -113,12 +90,13 @@ body {
 	display: block;
 	position: relative;
 	border-radius: 1px;
+	/* overflow: hidden; */
 }
 
 #time_bar{
+	margin-top: 5%;
 	width: 50%;
 	height: 5px;
-
 	background-size: 120%;
 	background-color: rgb(0, 153, 255);
 	background-image: linear-gradient(to left,rgb(181, 38, 150),rgb(47, 123, 193));;
@@ -131,92 +109,33 @@ body {
 	border-radius: 1px;
 	font-size: larger;
 	font-weight: 500;
-	top : -10px;
+	top : -2px;
 	position: relative;
+	margin-top: 0%;
 }
   
 
-#game{
-	margin-top: -2%;
-	font-size: larger;
-	
-}
+
 
 #bold{
 	font-weight: bold ;
 	font-size: larger;
 }
 
-.button_type_1{
-	background-color: #2f3241;
-	border: 2px solid #2f3241;
-	color: white;
-	border-radius: 5px;
-	padding: 5px;
-	font-size: larger;
-	font-weight: bold;
-	margin-top: 5%;
-	margin-left: 5%;
-	margin-right: 5%;
-	cursor: pointer;
-	width: 90%;
-	top: 30px;
-	position: relative;
+
+#settings{
+	left: 1%;
+	bottom: 1%;
+	height: 35px;
+	width: 25px;
+	overflow: hidden;
+	position: fixed;
+	font-size: 22px;
 }
 
-.button_type_1:hover{
-	background-color: #3c4053;
-	box-shadow: 0px 0px 15px 4px rgb(63, 121, 255),0px 0px 30px 6px rgb(181, 38, 150)
-		
-}
-
-.button_type_1{
-	background-color: #2f3241;
-	border: 2px solid #2f3241;
-	color: white;
-	border-radius: 5px;
-	padding: 5px;
-	font-size: larger;
-	font-weight: bold;
-	margin-top: 5%;
-	margin-left: 5%;
-	margin-right: 5%;
-	cursor: pointer;
-	width: 90%;
-	top: 30px;
-	position: relative;
-}
-
-.button_type_1:hover{
-	/* background-color: #50577a; */
-}
-
-
-
-
-
-/* @keyframes TimeBar{
-	0%{
-		background-color: rgb(255, 0, 0);
-	}
-	25%{
-		background-color: rgb(21, 255, 0);
-	}
-	65%{
-		background-color: rgb(0, 60, 255);
-	}
-	100%{
-		background-color: rgb(255, 0, 0);
-	}
-} */
-
-
-
-#Time{
-	text-align: center;
-	border-radius: 1px;
-	font-size: larger;
-	font-weight: bold;
-	top : -10px;
-	position: relative;
+#settings:hover{
+	background: linear-gradient(to top,rgb(181, 38, 150),rgb(47, 123, 193));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	
 }

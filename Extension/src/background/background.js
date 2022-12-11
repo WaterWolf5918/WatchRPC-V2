@@ -1,6 +1,6 @@
 console.log('[WatchRPC] Loaded Background Script')
 let videoData
-let timedata
+let timeData
 
 
 
@@ -22,10 +22,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendResponse(videoData);
             break;
         case "timedata":
-            timedata = message.data
+            timeData = message.data
             sendResponse("OK");
-            sendTime(timedata)
+            sendTime(timeData)
             break;
+        case "getTimeData":
+            console.log(`[WatchRPC] [Background]: Sending Time Data`)
+            if (!timeData){
+                sendResponse(false);
+                return;
+            }
+            sendResponse(timeData);
+            break;
+
+
     }
 });
 
@@ -43,8 +53,6 @@ function sendFetch(videoData){
     	},
     	body: JSON.stringify(videoData)
 	})
-	.then(response => response.json())
-	.then(response => console.log(JSON.stringify(response)))
 }
 
 
@@ -60,50 +68,7 @@ function sendTime(timeData){
     	},
     	body: JSON.stringify(timeData)
 	})
-	.then(response => response.json())
-	.then(response => console.log(JSON.stringify(response)))
 }
-
-
-
-
-//port.postMessage({question: "Who's there?"});
-//response
-
-  // var videoElements = document.querySelectorAll("video");
-  // await videoElements[0].play(); 
-
-  // if (message.type === 'videodata') {
-  //     console.log(message)
-  //     console.log(message.data)
-  //     sendResponse("OK");
-  //     // chrome.runtime.sendMessage({type:"test",data:"testdata if you can read this i might be very happy"}, function(response) {
-  //     //     console.log(response);
-  //     // });
-  // }
-  // if(message.type === "test"){
-  //     console.log(message)
-  //     sendResponse('pingback')
-  // }
-// chrome.runtime.onInstalled.addListener(() => {
-//   //run on install
-//   console.log('test')
-//   chome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-//     chome.declarativeContent.onPageChanged.addRules(
-//       [
-//         {
-//           conditions: [
-//             new chrome.declarativeContent.PageStateMatcher({
-//               pageUrl: { hostSuffix: "youtube.com"}
-//             })
-//           ],
-//           actions: [new chrome.declarativeContent.ShowAction()]
-//         }
-//       ]
-//     )
-//   })
-// })
-
 
 
 
