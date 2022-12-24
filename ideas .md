@@ -9,7 +9,7 @@
 
 ```JSON
 {
-platform: "*supported platform",
-uuid: "uuid" //uuid to identify request
+"platform": "*supported platform",
+"uuid": "uuid" //uuid to identify request
 }
 ```
