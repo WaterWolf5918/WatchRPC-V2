@@ -6,8 +6,8 @@
 
 ## on any post or get request :
     send data and a JSON object with the following {Platform: "Ytmusic", uuid: page uuid} 
-### info JSON
 
+### Info JSON object
 ```JSON
 {
 "platform": "*open platform *",
