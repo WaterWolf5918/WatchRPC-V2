@@ -5,3 +5,11 @@
 
 ## on any post or get:
     send data and a JSON object with the following {Platform: "Ytmusic", uuid: page uuid} 
+### info JSON
+
+```JSON
+{
+platform: "*supported platform",
+uuid: "uuid" //uuid to identify request
+}
+```
