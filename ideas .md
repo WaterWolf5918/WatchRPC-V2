@@ -2,6 +2,7 @@
 
 ## on page load:
     create uuid for page
+    get browsers name 
 
 ## on any post or get request :
     send data and a JSON object with the following {Platform: "Ytmusic", uuid: page uuid} 
@@ -10,7 +11,8 @@
 ```JSON
 {
 "platform": "*open platform *",
-"uuid": "36b8f84d-df4e-4d49-b662-bcde71a8764f"
+"uuid": "36b8f84d-df4e-4d49-b662-bcde71a8764f", 
+"browser": "firefox"
 }
 ```
 
